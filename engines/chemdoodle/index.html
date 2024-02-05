@@ -25,9 +25,9 @@
         if (xhr.readyState === 4 && xhr.status === 200) {
           cifContent = xhr.responseText;
           // Parse CIF content and render on the canvas
-          var molecule = ChemDoodle.readCIF(cifContent);
-          transformBallAndStick.loadMolecule(molecule);
         }
+      var molecule = ChemDoodle.readCIF(cifContent);
+      transformBallAndStick.loadMolecule(molecule);
       };
       xhr.send();
     };
