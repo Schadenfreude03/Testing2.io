@@ -20,11 +20,11 @@ xmlhttp.onreadystatechange = function(){
         if (xmlhttp.status == 200){
             window.accomodate(xmlhttp.responseText);
         } else alert("Error: cannot load sample data!");
+    xmlhttp.open("GET", './structure.cif');
+    xmlhttp.setRequestHeader("If-Modified-Since", "Sat, 1 Jan 2000 00:00:00 GMT");
+    xmlhttp.send(1);
     }
 }
-xmlhttp.open("GET", './structure.cif');
-xmlhttp.setRequestHeader("If-Modified-Since", "Sat, 1 Jan 2000 00:00:00 GMT");
-xmlhttp.send(1);
 var cif = ChemDoodle.readCIF(window.parent.cifdata, 1, 1, 1);
 var crystalTransformer = new ChemDoodle.TransformCanvas3D('ribbonTransformer', window.innerWidth, window.innerHeight);
 crystalTransformer.specs.set3DRepresentation('Ball and Stick');
