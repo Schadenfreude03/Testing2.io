@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChemDoodle CIF Viewer</title>
+
+  <!-- Include ChemDoodle library -->
+  <script type="text/javascript" src="ChemDoodleWeb.js"></script>
+</head>
+<body>
+  <h1>ChemDoodle CIF Viewer</h1>
+
+  <script>
+    // Load CIF file and display using ChemDoodle
+    window.onload = function() {
+      // Specify the path to your CIF file
+      var cifFilePath = './structure.cif';
+
+      // Create a new ChemDoodle canvas
+
+      // Load CIF file content
+      var cifContent = '';
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', cifFilePath, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          cifContent = xhr.responseText;
+
+          // Parse CIF content and render on the canvas
+          var cif = ChemDoodle.readCIF(cifContent, 1, 1, 1);
+          var crystalTransformer = new ChemDoodle.TransformCanvas3D('ribbonTransformer', window.innerWidth, window.innerHeight);
+          crystalTransformer.specs.set3DRepresentation('Ball and Stick');
+          crystalTransformer.specs.backgroundColor = '#ffffff';
+          crystalTransformer.specs.projectionPerspective_3D = false;
+          crystalTransformer.specs.atoms_displayLabels_3D = true;
+          crystalTransformer.specs.crystals_unitCellLineWidth = 1;
+          crystalTransformer.specs.shapes_color = 'black';
+          crystalTransformer.specs.shapes_lineWidth = 1;
+          crystalTransformer.loadContent([cif.molecule], [cif.unitCell]);
+        }
+      };
+      xhr.send();
+    };
+  </script>
+</body>
+</html>
