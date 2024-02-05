@@ -23,7 +23,7 @@
       xhr.open('GET', cifFilePath, true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-          cifContent = xhr.responseText;
+          cifContent = xhr;
           // Parse CIF content and render on the canvas
           var cif = ChemDoodle.readCIF(cifContent, 1, 1, 1);
           transformBallAndStick.loadContent([cif.molecule], [cif.unitCell]);
