@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChemDoodle CIF Viewer</title>
+
+  <!-- Include ChemDoodle library -->
+  <script type="text/javascript" src="ChemDoodleWeb.js"></script>
+</head>
+<body>
+  <h1>ChemDoodle CIF Viewer</h1>
+  <div id="chemDoodleContainer" style="width: 500px; height: 500px;"></div>
+
+  <script>
+    // Load CIF file and display using ChemDoodle
+    window.onload = function() {
+      // Specify the path to your CIF file
+      var cifFilePath = './structure.cif';
+
+      // Create a new ChemDoodle canvas
+      var canvas = new ChemDoodle.TransformCanvas3D('chemDoodleContainer', 500, 500);
+
+      // Load CIF file content
+      var cifContent = '';
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', cifFilePath, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          cifContent = xhr.responseText;
+
+          // Parse CIF content and render on the canvas
+          var molecule = ChemDoodle.readCIF(cifContent);
+          canvas.specs.set3DRepresentation('Ball and Stick');
+          canvas.loadMolecule(molecule);
+          canvas.repaint();
+        }
+      };
+      xhr.send();
+    };
+  </script>
+</body>
+</html>
