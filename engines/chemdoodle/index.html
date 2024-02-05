@@ -9,18 +9,14 @@
   <script type="text/javascript" src="ChemDoodleWeb.js"></script>
 </head>
 <body>
-  <h1>ChemDoodle CIF Viewer</h1>
-  <div id="chemDoodleContainer" style="width: 500px; height: 500px;"></div>
-
   <script>
+    let transformBallAndStick = new ChemDoodle.TransformCanvas3D('transformBallAndStick', 250, 250);
+    transformBallAndStick.styles.set3DRepresentation('Ball and Stick');
+    transformBallAndStick.styles.backgroundColor = 'black';
     // Load CIF file and display using ChemDoodle
     window.onload = function() {
       // Specify the path to your CIF file
       var cifFilePath = './structure.cif';
-
-      // Create a new ChemDoodle canvas
-      var canvas = new ChemDoodle.TransformCanvas3D('chemDoodleContainer', 500, 500);
-
       // Load CIF file content
       var cifContent = '';
       var xhr = new XMLHttpRequest();
@@ -28,12 +24,9 @@
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           cifContent = xhr.responseText;
-
           // Parse CIF content and render on the canvas
           var molecule = ChemDoodle.readCIF(cifContent);
-          canvas.specs.set3DRepresentation('Ball and Stick');
           canvas.loadMolecule(molecule);
-          canvas.repaint();
         }
       };
       xhr.send();
